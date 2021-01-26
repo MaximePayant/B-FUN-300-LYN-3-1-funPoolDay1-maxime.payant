@@ -132,3 +132,9 @@ myFoldr func f (x:xs) = myFoldr func (func x f) xs
 myPartition :: (a -> Bool) -> [a] -> ([a], [a])
 myPartition _ [] = ([], [])
 myPartition func l = ((myFilter func l), (myFilterBis func l))
+
+myQuickSort :: (a -> a -> Bool) -> [a] -> [a]
+myQuickSort _ [] = []
+myQuickSort func (x:xs) = let small = myQuickSort func [z | z <- xs, func z x == True]
+                              big = myQuickSort func [z | z <- xs, func z x == False]
+                          in  myAppend small (myAppend [x] big)
