@@ -116,6 +116,19 @@ myFilter _ [] = []
 myFilter func (x:xs) | ((func x) == True) = (x : myFilter func xs)
                      | otherwise = myFilter func xs
 
+myFilterBis :: (a -> Bool) -> [a] -> [a]
+myFilterBis _ [] = []
+myFilterBis func (x:xs) | ((func x) == False) = (x : myFilterBis func xs)
+                     | otherwise = myFilterBis func xs
+
 myFoldl :: (b -> a -> b) -> b -> [a] -> b
-myFoldl _ a [] = a
+myFoldl _ b [] = b
 myFoldl func f (x:xs) = myFoldl func (func f x) xs
+
+myFoldr :: (a -> b -> b) -> b -> [a] -> b
+myFoldr _ b [] = b
+myFoldr func f (x:xs) = myFoldr func (func x f) xs
+
+myPartition :: (a -> Bool) -> [a] -> ([a], [a])
+myPartition _ [] = ([], [])
+myPartition func l = ((myFilter func l), (myFilterBis func l))
