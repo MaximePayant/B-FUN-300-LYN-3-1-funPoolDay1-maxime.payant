@@ -106,3 +106,16 @@ myUnzipBis2 ((_,y):ts) = y : myUnzipBis2 ts
 
 myUnzip :: [(a,b)] -> ([a], [b])
 myUnzip t = (myUnzipBis t, myUnzipBis2 t)
+
+myMap :: (a -> b) -> [a] -> [b]
+myMap _ [] = []
+myMap func (x:xs) = func x : myMap func xs
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter _ [] = []
+myFilter func (x:xs) | ((func x) == True) = (x : myFilter func xs)
+                     | otherwise = myFilter func xs
+
+myFoldl :: (b -> a -> b) -> b -> [a] -> b
+myFoldl _ a [] = a
+myFoldl func f (x:xs) = myFoldl func (func f x) xs
