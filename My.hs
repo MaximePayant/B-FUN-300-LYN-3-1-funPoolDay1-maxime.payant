@@ -50,3 +50,59 @@ myTail (_:xs) = xs
 myLength :: [a] -> Int
 myLength [] = 0
 myLength (_:xs) = 1 + myLength xs
+
+myNth :: [a] -> Int -> a
+myNth [] _ = error "Wrong index"
+myNth (x:_) 0 = x
+myNth (_:xs) a = myNth xs (a - 1)
+
+myTake :: Int -> [a] -> [a]
+myTake a _ | a < 0 = error "Wrong Index"
+myTake _ [] = []
+myTake 0 _ = []
+myTake a (x:xs) = x : myTake (a - 1) xs
+
+myDrop :: Int -> [a] -> [a]
+myDrop a _ | a < 0 = error "Wrong Index"
+myDrop _ [] = []
+myDrop 0 l = l
+myDrop a (_:xs) = myDrop (a - 1) xs
+
+myAppend :: [a] -> [a] -> [a]
+myAppend [] l = l
+myAppend l [] = l
+myAppend (x:xs) m = x : myAppend xs m
+
+myReverseBis :: [a] -> [a] -> [a]
+myReverseBis l [] = l
+myReverseBis l (x:xs) = myReverseBis (x:l) xs
+
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse l = myReverseBis [] l
+
+myInit :: [a] -> [a]
+myInit [] = error "Empty List"
+myInit (_:[]) = []
+myInit (x:xs) = x : myInit xs
+
+myLast :: [a] -> a
+myLast [] = error "Empty List"
+myLast (x:[]) = x
+myLast (_:xs) = myLast xs
+
+myZip :: [a] -> [b] -> [(a, b)]
+myZip _ [] = []
+myZip [] _ = []
+myZip (x:xs) (y:ys) = (x, y) : myZip xs ys
+
+myUnzipBis :: [(a,b)] -> [a]
+myUnzipBis [] = []
+myUnzipBis ((x,_):ts) = x : myUnzipBis ts
+
+myUnzipBis2 :: [(a,b)] -> [b]
+myUnzipBis2 [] = []
+myUnzipBis2 ((_,y):ts) = y : myUnzipBis2 ts
+
+myUnzip :: [(a,b)] -> ([a], [b])
+myUnzip t = (myUnzipBis t, myUnzipBis2 t)
