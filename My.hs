@@ -127,7 +127,7 @@ myFoldl func f (x:xs) = myFoldl func (func f x) xs
 
 myFoldr :: (a -> b -> b) -> b -> [a] -> b
 myFoldr _ b [] = b
-myFoldr func f (x:xs) = myFoldr func (func x f) xs
+myFoldr func f (x:xs) = func x (myFoldr func f xs)
 
 myPartition :: (a -> Bool) -> [a] -> ([a], [a])
 myPartition _ [] = ([], [])
